@@ -1,4 +1,4 @@
-import { MutableRefObject, useState } from "react";
+import { MutableRefObject, useState, useEffect } from "react";
 import { usePathfinding } from "../hooks/usePathfinding";
 import { useTile } from "../hooks/useTile";
 import {
@@ -35,6 +35,15 @@ export function Nav({
   } = usePathfinding();
   const { startTile, endTile } = useTile();
   const { speed, setSpeed } = useSpeed();
+  const [nodesVisited, setNodesVisited] = useState<number | null>(null);
+  const [pathLength, setPathLength] = useState<number | null>(null);
+
+    // Ensure controls aren’t left disabled if visualization not running
+    useEffect(() => {
+      if (!isVisualizationRunningRef.current) {
+        setIsDisabled(false);
+      }
+    }, [isVisualizationRunningRef]);
 
   const handleGenerateMaze = (maze: MazeType) => {
     if (maze === "NONE") {
@@ -62,6 +71,8 @@ export function Nav({
     if (isGraphVisualized) {
       setIsGraphVisualized(false);
       resetGrid({ grid: grid.slice(), startTile, endTile });
+      setNodesVisited(null);
+      setPathLength(null);
       return;
     }
 
@@ -71,6 +82,10 @@ export function Nav({
       startTile,
       endTile,
     });
+
+    // store performance stats for UI
+    setNodesVisited(traversedTiles.length);
+    setPathLength(path.length);
 
     animatePath(traversedTiles, path, startTile, endTile, speed);
     setIsDisabled(true);
@@ -123,6 +138,19 @@ export function Nav({
             isGraphVisualized={isGraphVisualized}
             handlerRunVisualizer={handlerRunVisualizer}
           />
+          <div className="ml-4 flex flex-col text-sm">
+            <div className="font-medium">Performance</div>
+            <div className="mt-1 flex gap-3">
+              <div className="flex items-center">
+                <span className="text-xs text-slate-500 mr-2">Nodes Visited:</span>
+                <span className="font-semibold">{nodesVisited ?? "-"}</span>
+              </div>
+              <div className="flex items-center">
+                <span className="text-xs text-slate-500 mr-2">Path Length:</span>
+                <span className="font-semibold">{pathLength ?? "-"}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

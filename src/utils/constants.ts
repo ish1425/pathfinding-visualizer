@@ -10,7 +10,7 @@ export const START_TILE_CONFIGURATION = {
   isWall: false,
   isPath: false,
   distance: 0,
-  isStart: false,
+  isStart: true,
   isTraversed: false,
   parent: null,
 };
@@ -18,7 +18,7 @@ export const START_TILE_CONFIGURATION = {
 export const END_TILE_CONFIGURATION = {
   row: MAX_ROWS - 2,
   col: MAX_COLS - 2,
-  isEnd: false,
+  isEnd: true,
   isWall: false,
   isPath: false,
   distance: 0,
@@ -28,7 +28,7 @@ export const END_TILE_CONFIGURATION = {
 };
 
 export const TILE_STYLE =
-  "lg:w-[17px] md:w-[15px] xs:w-[8px] w-[7px] lg:h-[17px] md:h-[15px] xs:h-[8px] h-[7px] border-t border-r border-sky-200";
+  "lg:w-[14px] md:w-[12px] xs:w-[6px] w-[5px] lg:h-[14px] md:h-[12px] xs:h-[6px] h-[5px] border-t border-r border-black";
 export const TRAVERSED_TILE_STYLE = TILE_STYLE + " bg-cyan-500";
 export const START_TILE_STYLE = TILE_STYLE + " bg-green-500";
 export const END_TILE_STYLE = TILE_STYLE + " bg-red-600";
@@ -43,10 +43,8 @@ export const MAZES: MazeSelectType[] = [
 
 export const PATHFINDING_ALGORITHMS: AlgorithmSelectType[] = [
   { name: "Dijkstra", value: "DIJKSTRA" },
-  { name: "A-Star", value: "A_STAR" },
-  { name: "Breath First Search", value: "BFS" },
-  { name: "Depth First Search", value: "DFS" },
-];
+  { name: "A-Star", value: "A_STAR" }
+  ];
 
 export const SPEEDS: SpeedSelectType[] = [
   { name: "Slow", value: 2 },

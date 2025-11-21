@@ -22,7 +22,7 @@ export const PathfindingContext = createContext<
 >(undefined);
 
 export const PathfindingProvider = ({ children }: { children: ReactNode }) => {
-  const [algorithm, setAlgorithm] = useState<AlgorithmType>("BFS");
+  const [algorithm, setAlgorithm] = useState<AlgorithmType>("DIJKSTRA");
   const [maze, setMaze] = useState<MazeType>("NONE");
   const [grid, setGrid] = useState<GridType>(
     createGrid(START_TILE_CONFIGURATION, END_TILE_CONFIGURATION)
